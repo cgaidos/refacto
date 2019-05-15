@@ -76,7 +76,9 @@ class TemplateManager
         if ($user) {
             // La syntaxe n'est pas claire, on la remplace par un if plus lisible
             if (strpos($text, '[user:first_name]') !== false) {
-                $text = str_replace('[user:first_name]', ucfirst(mb_strtolower($user->firstname)), $text);
+                // On passe par le repository du user pour avoir ses éléments
+                $userFromRepository = UserRepository::getInstance()->getById($user->id);
+                $text = str_replace('[user:first_name]', ucfirst(mb_strtolower($userFromRepository->firstname)), $text);
             }
         }
 
