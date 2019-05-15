@@ -19,26 +19,29 @@ require_once __DIR__ . '/src/TemplateManager.php';
 
 $faker = \Faker\Factory::create();
 
+// On ajoute une balise [EOL] pour soigner la présentation du message
 $template = new Template(
     1,
     'Votre voyage avec une agence locale [quote:destination_name]',
     "
-Bonjour [user:first_name],
+[EOL][EOL]Numéro de voyage : [quote:summary_html]
+[EOL]Bonjour [user:first_name],[EOL][EOL]
 
-Merci d'avoir contacté un agent local pour votre voyage [quote:destination_name].
+Merci d'avoir contacté un agent local pour votre voyage [quote:destination_name].[EOL]
+[quote:destination_link][EOL][EOL]
 
-Bien cordialement,
+Bien cordialement,[EOL][EOL]
 
-L'équipe Evaneos.com
-www.evaneos.com
+L'équipe Evaneos.com[EOL]
+www.evaneos.com[EOL]
 ");
 $templateManager = new TemplateManager();
 
 $message = $templateManager->getTemplateComputed(
     $template,
     [
-        'quote' => new Quote($faker->randomNumber(), $faker->randomNumber(), $faker->randomNumber(), $faker->date())
+        'quote' => new Quote($faker->randomNumber(), $faker->randomNumber(), $faker->randomNumber(), $faker->date()),
+        'user' => new User($faker->randomNumber(), $faker->firstName, $faker->lastName, $faker->email)
     ]
 );
-
 echo $message->subject . "\n" . $message->content;

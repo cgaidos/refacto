@@ -68,6 +68,8 @@ class TemplateManager
             (strpos($text, '[user:first_name]') !== false) and $text = str_replace('[user:first_name]'       , ucfirst(mb_strtolower($_user->firstname)), $text);
         }
 
+        // On remplace les balises de retour à la ligne par l'équivalent html
+        $text = str_replace('[EOL]', '<br>', $text);
         return $text;
     }
 }

@@ -17,7 +17,8 @@ class Quote
 
     public static function renderHtml(Quote $quote)
     {
-        return '<p>' . $quote->id . '</p>';
+        // On conserve la cohérence de la mise en page
+        return $quote->id . '<br>';
     }
 
     public static function renderText(Quote $quote)
